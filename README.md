@@ -1,5 +1,8 @@
 ## 프로젝트
 
+Swagger API 명세 이미지
+![Swagger Image](src/main/resources/images/swagger.png)
+
 ## Getting Started
 
 ### Prerequisites
