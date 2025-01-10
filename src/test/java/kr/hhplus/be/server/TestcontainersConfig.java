@@ -2,14 +2,12 @@ package kr.hhplus.be.server;
 
 import jakarta.annotation.PreDestroy;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
-@Configuration
-class TestcontainersConfiguration {
+//@TestConfiguration
+class TestcontainersConfig {
 
 	public static final MySQLContainer<?> MYSQL_CONTAINER;
 
@@ -20,7 +18,8 @@ class TestcontainersConfiguration {
 			.withPassword("test");
 		MYSQL_CONTAINER.start();
 
-		System.setProperty("spring.datasource.url", MYSQL_CONTAINER.getJdbcUrl() + "?characterEncoding=UTF-8&serverTimezone=UTC");
+		System.setProperty("spring.datasource.url",
+			MYSQL_CONTAINER.getJdbcUrl() + "?characterEncoding=UTF-8&serverTimezone=UTC");
 		System.setProperty("spring.datasource.username", MYSQL_CONTAINER.getUsername());
 		System.setProperty("spring.datasource.password", MYSQL_CONTAINER.getPassword());
 	}
