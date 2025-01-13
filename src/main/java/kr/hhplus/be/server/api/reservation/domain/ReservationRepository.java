@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.service.reservation.domain;
+package kr.hhplus.be.server.api.reservation.domain;
 
 import jakarta.persistence.LockModeType;
 import java.time.Instant;
@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -19,6 +21,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 	Reservation findBySeatNoAndIsReservedTrue(@Param("seatNo") long seatNo); // 예약용
 
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
-	List<Reservation> findByExpiredAtBeforeAndIsReservedTrue(Instant now); // 스케줄러용
+	List<Reservation> findByExpiredAtBeforeAndIsReservedTrue(LocalDateTime now); // 스케줄러용
 
 }

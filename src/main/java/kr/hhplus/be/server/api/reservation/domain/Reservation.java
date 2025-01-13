@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.service.reservation.domain;
+package kr.hhplus.be.server.api.reservation.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,19 +6,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.LocalDateTime;
+
+import lombok.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class Reservation {
 
@@ -45,5 +41,13 @@ public class Reservation {
 	private Boolean isReserved = false;
 
 	@Column(nullable = false)
-	private Instant expiredAt;
+	private LocalDateTime expiredAt;
+
+	public void confirm() {
+		this.expiredAt = null;
+	}
+
+	public void open() {
+		this.isReserved = false;
+	}
 }
