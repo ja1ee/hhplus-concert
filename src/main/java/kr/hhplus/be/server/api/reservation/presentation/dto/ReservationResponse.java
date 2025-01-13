@@ -1,9 +1,11 @@
-package kr.hhplus.be.server.api.service.reservation.presentation.dto;
+package kr.hhplus.be.server.api.reservation.presentation.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
-import kr.hhplus.be.server.api.service.reservation.application.dto.ReservationResult;
+import java.time.LocalDateTime;
+
+import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 
 public record ReservationResponse(
 	long id,
@@ -13,7 +15,7 @@ public record ReservationResponse(
 	LocalDate concertDate,
 	BigDecimal finalPrice,
 	boolean isReserved,
-	Instant expiredAt
+	LocalDateTime expiredAt
 ) {
 
 	public static ReservationResponse from(ReservationResult result) {

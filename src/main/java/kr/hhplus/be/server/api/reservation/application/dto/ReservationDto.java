@@ -1,9 +1,9 @@
-package kr.hhplus.be.server.api.service.reservation.application.dto;
+package kr.hhplus.be.server.api.reservation.application.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import kr.hhplus.be.server.api.service.concert.application.dto.ConcertSeatDto;
-import kr.hhplus.be.server.api.service.reservation.domain.Reservation;
+import kr.hhplus.be.server.api.concert.application.dto.ConcertSeatDto;
+import kr.hhplus.be.server.api.reservation.domain.Reservation;
 import lombok.Builder;
 
 @Builder

@@ -1,11 +1,11 @@
-package kr.hhplus.be.server.api.service.reservation.presentation.dto;
+package kr.hhplus.be.server.api.reservation.presentation.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import kr.hhplus.be.server.api.service.concert.application.dto.ConcertSeatDto;
-import kr.hhplus.be.server.api.service.reservation.application.dto.ReservationDto;
+import kr.hhplus.be.server.api.concert.application.dto.ConcertSeatDto;
+import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 
 public record ReservationRequest(
 	@Schema(description = "사용자 고유 ID", example = "12345")
