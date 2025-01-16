@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.reservation.domain;
+package kr.hhplus.be.server.api.reservation.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,28 +16,23 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
+@ToString
 public class Reservation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(nullable = false)
 	private long userId;
 
-	@Column(nullable = false)
 	private long seatId;
 
-	@Column(nullable = false)
 	private long seatNo;
 
-	@Column(nullable = false)
 	private LocalDate concertDate;
 
-	@Column(nullable = false)
 	private BigDecimal finalPrice;
 
-	@Column(nullable = false)
 	private Boolean isReserved = false;
 
 	@Column(nullable = false)
@@ -47,7 +42,7 @@ public class Reservation {
 		this.expiredAt = null;
 	}
 
-	public void open() {
+	public void expire() {
 		this.isReserved = false;
 	}
 }

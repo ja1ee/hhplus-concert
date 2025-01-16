@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.service.concert.domain;
+package kr.hhplus.be.server.api.concert.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,17 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.math.BigDecimal;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class ConcertSeat {
 
@@ -24,16 +20,17 @@ public class ConcertSeat {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(nullable = false)
 	private long scheduleId;
 
-	@Column(nullable = false)
 	private int seatNo;
 
-	@Column(nullable = false)
 	private BigDecimal price;
 
-	@Column(nullable = false)
 	private Boolean isReserved = false;
 
+	public void reserve() {
+		this.isReserved = true;
+	}
+
+	public void expire() { this.isReserved = false; }
 }

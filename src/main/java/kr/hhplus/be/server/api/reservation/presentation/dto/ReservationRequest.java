@@ -8,6 +8,10 @@ import kr.hhplus.be.server.api.concert.application.dto.ConcertSeatDto;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 
 public record ReservationRequest(
+	@Schema(description = "예약 ID", example = "1")
+	@NotNull
+	long id,
+
 	@Schema(description = "사용자 고유 ID", example = "12345")
 	@NotNull
 	long userId,
@@ -27,8 +31,10 @@ public record ReservationRequest(
 
 	public ReservationDto toDto() {
 		return new ReservationDto(
+			id,
 			userId,
-			seatDto,
+			seatDto.id(),
+			seatDto.seatNo(),
 			concertDate,
 			finalPrice
 		);

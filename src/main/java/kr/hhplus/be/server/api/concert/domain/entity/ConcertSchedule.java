@@ -1,22 +1,19 @@
-package kr.hhplus.be.server.api.service.concert.domain;
+package kr.hhplus.be.server.api.concert.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.Date;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.time.LocalDate;
+
+import lombok.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class ConcertSchedule {
 
@@ -24,12 +21,9 @@ public class ConcertSchedule {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(nullable = false)
 	private long concertId;
 
-	@Column(nullable = false)
-	private Date concertDate;
+	private LocalDate concertDate;
 
-	@Column(nullable = false)
 	private Boolean isOpen = true;
 }

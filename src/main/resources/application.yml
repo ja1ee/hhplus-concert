@@ -29,4 +29,8 @@ spring:
     username: application
     password: application
 
-
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
