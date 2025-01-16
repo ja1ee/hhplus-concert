@@ -1,7 +1,6 @@
 package kr.hhplus.be.server.api.reservation.presentation.dto;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

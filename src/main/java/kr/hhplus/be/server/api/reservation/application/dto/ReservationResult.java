@@ -1,11 +1,10 @@
 package kr.hhplus.be.server.api.reservation.application.dto;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import kr.hhplus.be.server.api.reservation.domain.Reservation;
+import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 
 public record ReservationResult(
 	long id,
