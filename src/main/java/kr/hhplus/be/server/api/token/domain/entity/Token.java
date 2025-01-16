@@ -1,22 +1,19 @@
-package kr.hhplus.be.server.api.service.token.domain;
+package kr.hhplus.be.server.api.token.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.Instant;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+import lombok.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class Token {
 
@@ -24,16 +21,19 @@ public class Token {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(nullable = false)
 	private long userId;
 
-	@Column(nullable = false)
 	private Boolean isActivated = false; // 대기열 진입 시 활성화
 
-	private Instant expiredAt;
+	private LocalDateTime expiredAt;
 
-	public void activate(Instant time) {
+	public void activate(LocalDateTime time) {
 		isActivated = true;
 		expiredAt = time;
+	}
+
+	public Token(long userId) {
+		this.userId = userId;
+		this.isActivated = false;
 	}
 }
