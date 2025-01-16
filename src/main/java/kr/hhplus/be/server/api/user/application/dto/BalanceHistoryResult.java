@@ -1,15 +1,17 @@
-package kr.hhplus.be.server.api.service.user.application.dto;
+package kr.hhplus.be.server.api.user.application.dto;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import kr.hhplus.be.server.api.service.user.domain.BalanceHistory;
+import java.time.LocalDateTime;
+
+import kr.hhplus.be.server.api.user.domain.entity.BalanceHistory;
+import kr.hhplus.be.server.api.user.domain.entity.BalanceHistoryType;
 
 public record BalanceHistoryResult(
 	long id,
 	long userId,
-	String type,
+	BalanceHistoryType type,
 	BigDecimal amount,
-	Instant changedAt
+	LocalDateTime changedAt
 ) {
 
 	public static BalanceHistoryResult from(BalanceHistory balanceHistory) {

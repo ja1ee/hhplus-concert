@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.service.user.domain;
+package kr.hhplus.be.server.api.user.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,18 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.math.BigDecimal;
-import java.time.Instant;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.LocalDateTime;
+
+import lombok.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class BalanceHistory {
 
@@ -25,14 +21,11 @@ public class BalanceHistory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(nullable = false)
 	private long userId;
 
-	private String type;
+	private BalanceHistoryType type;
 
-	@Column(nullable = false)
 	private BigDecimal amount;
 
-	@Column(nullable = false)
-	private Instant changedAt;
+	private LocalDateTime changedAt;
 }
