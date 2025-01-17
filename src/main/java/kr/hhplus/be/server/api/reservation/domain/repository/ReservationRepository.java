@@ -16,7 +16,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
 	Reservation findBySeatIdAndIsReservedTrue(long seatId); // 좌석 만료 확인용
 
-	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	List<Reservation> findByExpiredAtBeforeAndIsReservedTrue(LocalDateTime now); // 스케줄러용
 
 }
