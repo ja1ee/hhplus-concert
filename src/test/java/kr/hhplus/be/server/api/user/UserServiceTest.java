@@ -25,18 +25,14 @@ public class UserServiceTest {
 	@Test
 	public void 잔액충전_성공() {
 		// given
-		BalanceHistoryDto dto = BalanceHistoryDto.builder()
-				.userId(1L)
-				.type(BalanceHistoryType.CHARGE)
-				.amount(BigDecimal.valueOf(20000))
-				.build();
+		BalanceHistoryDto dto = new BalanceHistoryDto(1L, BalanceHistoryType.CHARGE, BigDecimal.valueOf(20000));
 
 		User user = User.builder()
 				.id(1L)
 				.balance(BigDecimal.valueOf(10000))
 				.build();
 
-		when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user));
+		when(userRepository.findByIdWithLock(1L)).thenReturn(Optional.ofNullable(user));
         assert user != null;
         when(userRepository.save(user)).thenReturn(user);
 
@@ -50,13 +46,9 @@ public class UserServiceTest {
 	@Test
 	public void 잔액충전_사용자존재하지않으면_NOT_FOUND_USER() {
 		// given
-		BalanceHistoryDto dto = BalanceHistoryDto.builder()
-				.userId(1L)
-				.type(BalanceHistoryType.CHARGE)
-				.amount(BigDecimal.valueOf(20000))
-				.build();
+		BalanceHistoryDto dto = new BalanceHistoryDto(1L, BalanceHistoryType.CHARGE, BigDecimal.valueOf(20000));
 
-		when(userRepository.findById(1L))
+		when(userRepository.findByIdWithLock(1L))
 				.thenReturn(Optional.empty());
 
 		// when & then
@@ -66,18 +58,14 @@ public class UserServiceTest {
 	@Test
 	public void 잔액사용_성공() {
 		// given
-		BalanceHistoryDto dto = BalanceHistoryDto.builder()
-				.userId(1L)
-				.type(BalanceHistoryType.PAY)
-				.amount(BigDecimal.valueOf(10000))
-				.build();
+		BalanceHistoryDto dto = new BalanceHistoryDto(1L, BalanceHistoryType.PAY, BigDecimal.valueOf(10000));
 
 		User user = User.builder()
 				.id(1L)
 				.balance(BigDecimal.valueOf(20000))
 				.build();
 
-		when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user));
+		when(userRepository.findByIdWithLock(1L)).thenReturn(Optional.ofNullable(user));
 		assert user != null;
 		when(userRepository.save(user)).thenReturn(user);
 
@@ -91,18 +79,14 @@ public class UserServiceTest {
 	@Test
 	public void 잔액사용_잔액부족하면_INSUFFICIENT_BALANCE() {
 		// given
-		BalanceHistoryDto dto = BalanceHistoryDto.builder()
-				.userId(1L)
-				.type(BalanceHistoryType.PAY)
-				.amount(BigDecimal.valueOf(20000))
-				.build();
+		BalanceHistoryDto dto = new BalanceHistoryDto(1L, BalanceHistoryType.PAY, BigDecimal.valueOf(20000));
 
 		User user = User.builder()
 				.id(1L)
 				.balance(BigDecimal.valueOf(10000))
 				.build();
 
-		when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user));
+		when(userRepository.findByIdWithLock(1L)).thenReturn(Optional.ofNullable(user));
 
 		// when & then
 		assertThatThrownBy(() -> userService.payAmount(dto)).hasMessage(ErrorCode.INSUFFICIENT_BALANCE.getReason());

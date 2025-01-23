@@ -22,7 +22,7 @@ public class UserService {
 	@Transactional
 	public UserResult payAmount(BalanceHistoryDto dto) {
 		BigDecimal amount = dto.amount();
-		User user = userRepository.findById(dto.userId())
+		User user = userRepository.findByIdWithLock(dto.userId())
 				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
 		BigDecimal currentBalance = user.getBalance();
 
@@ -39,7 +39,7 @@ public class UserService {
 			throw new CustomException(ErrorCode.INSUFFICIENT_CHARGE);
 		};
 
-		User user = userRepository.findById(dto.userId())
+		User user = userRepository.findByIdWithLock(dto.userId())
 				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
 		user.charge(dto.amount());
 		return UserResult.from(userRepository.save(user));
