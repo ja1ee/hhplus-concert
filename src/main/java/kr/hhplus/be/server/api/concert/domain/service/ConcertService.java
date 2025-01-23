@@ -44,7 +44,7 @@ public class ConcertService {
 	}
 
 	public void reserveSeat(long seatId) {
-		ConcertSeat seat = concertSeatRepository.findById(seatId)
+		ConcertSeat seat = concertSeatRepository.findByIdWithLock(seatId)
 				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_SEAT));
 
 		if (seat.getIsReserved()) {
