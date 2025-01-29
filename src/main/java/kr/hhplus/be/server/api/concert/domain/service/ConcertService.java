@@ -2,6 +2,7 @@ package kr.hhplus.be.server.api.concert.domain.service;
 
 import kr.hhplus.be.server.api.common.exception.CustomException;
 import kr.hhplus.be.server.api.common.exception.ErrorCode;
+import kr.hhplus.be.server.api.common.aop.lock.RedisLock;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertScheduleResult;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertSeatResult;
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSchedule;
@@ -9,11 +10,13 @@ import kr.hhplus.be.server.api.concert.domain.entity.ConcertSeat;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertScheduleRepository;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertSeatRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ConcertService {
@@ -43,8 +46,9 @@ public class ConcertService {
 		return ConcertSeatResult.from(seats);
 	}
 
+	@RedisLock(prefix = "seat:", key = "#seatId")
 	public void reserveSeat(long seatId) {
-		ConcertSeat seat = concertSeatRepository.findByIdWithLock(seatId)
+		ConcertSeat seat = concertSeatRepository.findById(seatId)
 				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_SEAT));
 
 		if (seat.getIsReserved()) {

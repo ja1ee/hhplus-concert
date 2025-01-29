@@ -1,7 +1,6 @@
 package kr.hhplus.be.server.api.reservation.application;
 
 import kr.hhplus.be.server.api.concert.domain.service.ConcertService;
-import kr.hhplus.be.server.api.concert.domain.service.RedissonSeatReservationService;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
@@ -21,7 +20,7 @@ public class ReservationFacade {
 	private final ReservationService reservationService;
 	private final PaymentFacade paymentFacade;
 	private final TokenService tokenService;
-	private final RedissonSeatReservationService concertService;
+	private final ConcertService concertService;
 
 	@Transactional
 	public ReservationResult makeReservation(ReservationDto dto) {

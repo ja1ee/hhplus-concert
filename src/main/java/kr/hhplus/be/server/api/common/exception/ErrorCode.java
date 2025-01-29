@@ -21,7 +21,8 @@ public enum ErrorCode {
     INSUFFICIENT_BALANCE(HttpStatus.BAD_REQUEST, "잔액이 부족합니다."),
     INSUFFICIENT_CHARGE(HttpStatus.BAD_REQUEST, "잘못된 금액이 입력되었습니다."),
 
-    INTERRUPT_OCCURRED(HttpStatus.BAD_REQUEST, "인터럽트가 발생했습니다");
+    INTERRUPT_OCCURRED(HttpStatus.BAD_REQUEST, "인터럽트가 발생했습니다"),
+    FAILED_GET_LOCK(HttpStatus.BAD_REQUEST, "락 획득에 실패하였습니다.");
 
     private final HttpStatus httpStatus;
     private final String reason;

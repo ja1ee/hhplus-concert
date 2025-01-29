@@ -31,17 +31,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 class ReservationFacadeIntegrationTest {
 
 	@Autowired
-    ReservationFacade reservationFacade;
+    private ReservationFacade reservationFacade;
+    @Autowired
+    private UserService userService;
+
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
     @Autowired
     private ConcertSeatRepository concertSeatRepository;
     @Autowired
     private TokenRepository tokenRepository;
 	@Autowired
-	DatabaseCleaner databaseCleaner;
-    @Autowired
-    private UserService userService;
+	private DatabaseCleaner databaseCleaner;
 
 	LocalDateTime mockTime = LocalDateTime.of(2025, 1, 15, 10, 30);
 
