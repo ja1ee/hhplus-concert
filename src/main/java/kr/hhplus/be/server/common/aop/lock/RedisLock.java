@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.common.aop.lock;
+package kr.hhplus.be.server.common.aop.lock;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

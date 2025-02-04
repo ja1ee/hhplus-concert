@@ -1,8 +1,8 @@
 package kr.hhplus.be.server.api.concert.domain.service;
 
-import kr.hhplus.be.server.api.common.exception.CustomException;
-import kr.hhplus.be.server.api.common.exception.ErrorCode;
-import kr.hhplus.be.server.api.common.aop.lock.RedisLock;
+import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.common.exception.ErrorCode;
+import kr.hhplus.be.server.common.aop.lock.RedisLock;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertScheduleResult;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertSeatResult;
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSchedule;

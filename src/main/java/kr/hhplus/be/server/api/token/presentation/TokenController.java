@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kr.hhplus.be.server.api.common.response.ApiResponse;
+import kr.hhplus.be.server.common.response.ApiResponse;
 import kr.hhplus.be.server.api.token.application.dto.TokenResult;
 import kr.hhplus.be.server.api.token.presentation.dto.TokenResponse;
 import kr.hhplus.be.server.api.token.domain.service.TokenService;

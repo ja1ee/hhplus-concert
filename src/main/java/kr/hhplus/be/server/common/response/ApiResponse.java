@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.common.response;
+package kr.hhplus.be.server.common.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

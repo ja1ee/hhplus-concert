@@ -1,7 +1,7 @@
-package kr.hhplus.be.server.api.common.exception;
+package kr.hhplus.be.server.common.exception;
 
 import jakarta.persistence.EntityNotFoundException;
-import kr.hhplus.be.server.api.common.response.ErrorResponse;
+import kr.hhplus.be.server.common.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

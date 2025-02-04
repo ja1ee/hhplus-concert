@@ -1,6 +1,6 @@
-package kr.hhplus.be.server.api.common.config;
+package kr.hhplus.be.server.common.config;
 
-import kr.hhplus.be.server.api.common.filter.LoggingFilter;
+import kr.hhplus.be.server.common.filter.LoggingFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

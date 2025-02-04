@@ -5,9 +5,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import kr.hhplus.be.server.api.common.exception.CustomException;
-import kr.hhplus.be.server.api.common.exception.ErrorCode;
-import kr.hhplus.be.server.api.common.response.ErrorResponse;
+import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.common.exception.ErrorCode;
+import kr.hhplus.be.server.common.response.ErrorResponse;
 import kr.hhplus.be.server.api.token.domain.service.TokenService;
 import kr.hhplus.be.server.api.token.application.dto.TokenResult;
 import kr.hhplus.be.server.api.token.presentation.dto.TokenResponse;
@@ -23,6 +23,10 @@ public class TokenHeaderInterceptor implements HandlerInterceptor {
 	private final TokenService tokenService;
 	private final ObjectMapper objectMapper;
 
+
+	// todo
+	//* TokenHeaderInterceptor에서 토큰에 관련된 필요 이상의 로직이 포함되어 있어요.
+	// 토큰을 생성한다거나, 토큰의 상태를 확인한다거나.. 유효한 토큰인지 검증을 토큰서비스에 요청하는 것에 집중해주세요.
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 		String userIdHeader = request.getHeader("userId");

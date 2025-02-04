@@ -6,7 +6,7 @@ import kr.hhplus.be.server.api.user.domain.entity.BalanceHistoryType;
 import kr.hhplus.be.server.api.user.domain.entity.User;
 import kr.hhplus.be.server.api.user.domain.repository.UserRepository;
 import kr.hhplus.be.server.api.user.domain.service.UserService;
-import kr.hhplus.be.server.api.common.exception.ErrorCode;
+import kr.hhplus.be.server.common.exception.ErrorCode;
 import org.junit.Test;
 
 import java.math.BigDecimal;

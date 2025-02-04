@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.common.exception;
+package kr.hhplus.be.server.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
 

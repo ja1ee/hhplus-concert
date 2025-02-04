@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.config;
+package kr.hhplus.be.server.common.config;
 
 import kr.hhplus.be.server.api.token.presentation.TokenHeaderInterceptor;
 import lombok.AllArgsConstructor;

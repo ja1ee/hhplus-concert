@@ -1,12 +1,11 @@
 package kr.hhplus.be.server.api.user.domain.service;
 
-import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.user.application.dto.BalanceHistoryDto;
 import kr.hhplus.be.server.api.user.domain.entity.User;
 import kr.hhplus.be.server.api.user.domain.repository.UserRepository;
-import kr.hhplus.be.server.api.common.exception.CustomException;
+import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.api.user.application.dto.UserResult;
-import kr.hhplus.be.server.api.common.exception.ErrorCode;
+import kr.hhplus.be.server.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

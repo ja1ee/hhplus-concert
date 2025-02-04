@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.common.response;
+package kr.hhplus.be.server.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -13,7 +13,7 @@ import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 import kr.hhplus.be.server.api.reservation.domain.repository.ReservationRepository;
 import kr.hhplus.be.server.api.reservation.domain.service.ReservationService;
-import kr.hhplus.be.server.api.common.exception.ErrorCode;
+import kr.hhplus.be.server.common.exception.ErrorCode;
 import org.junit.Test;
 
 
