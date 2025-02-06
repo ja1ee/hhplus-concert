@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.token.presentation;
+package kr.hhplus.be.server.api.queue.presentation.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -7,9 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.hhplus.be.server.common.response.ApiResponse;
-import kr.hhplus.be.server.api.token.application.dto.TokenResult;
-import kr.hhplus.be.server.api.token.presentation.dto.TokenResponse;
-import kr.hhplus.be.server.api.token.domain.service.TokenService;
+import kr.hhplus.be.server.api.queue.application.service.QueueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Tag(name = "토큰 발급 및 대기열 관리 API", description = "대기열 관리 토큰을 발급합니다.")
 @RequestMapping("/tokens")
-public class TokenController {
+public class QueueController {
 
-	private final TokenService tokenService;
+	private final QueueService queueService;
 
 	@Operation(
 		summary = "Token 발급",
@@ -34,12 +32,10 @@ public class TokenController {
 		)
 	})
 	@GetMapping("/{userId}")
-	public ResponseEntity<ApiResponse<TokenResponse>> createToken(
+	public ResponseEntity<ApiResponse<Long>> createToken(
 		@Parameter(name = "userId", description = "유저의 고유 ID", example = "12345")
 		@PathVariable("userId") long userId) {
-		TokenResult result = tokenService.createToken(userId);
-		TokenResponse response = TokenResponse.from(result);
-		return ResponseEntity.ok(ApiResponse.of("토큰이 발행되었습니다.", response));
-
+		Long rank = queueService.addToWaitQueue(userId);
+		return ResponseEntity.ok(ApiResponse.of("대기열에 등록되었습니다.", rank));
 	}
 }
