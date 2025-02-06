@@ -1,11 +1,10 @@
-package kr.hhplus.be.server.api.reservation.application;
+package kr.hhplus.be.server.api.reservation.presentation.facade;
 
 import java.util.List;
 
-import kr.hhplus.be.server.api.concert.domain.service.ConcertService;
+import kr.hhplus.be.server.api.concert.application.service.ConcertService;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
-import kr.hhplus.be.server.api.reservation.domain.repository.ReservationRepository;
-import kr.hhplus.be.server.api.reservation.domain.service.ReservationService;
+import kr.hhplus.be.server.api.reservation.application.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

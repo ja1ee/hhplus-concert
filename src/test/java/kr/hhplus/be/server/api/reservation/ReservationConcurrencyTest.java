@@ -2,7 +2,7 @@ package kr.hhplus.be.server.api.reservation;
 
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSeat;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertSeatRepository;
-import kr.hhplus.be.server.api.reservation.application.ReservationFacade;
+import kr.hhplus.be.server.api.reservation.presentation.facade.ReservationFacade;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 import kr.hhplus.be.server.api.reservation.domain.repository.ReservationRepository;

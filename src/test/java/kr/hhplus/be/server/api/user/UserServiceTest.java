@@ -5,7 +5,7 @@ import kr.hhplus.be.server.api.user.application.dto.UserResult;
 import kr.hhplus.be.server.api.user.domain.entity.BalanceHistoryType;
 import kr.hhplus.be.server.api.user.domain.entity.User;
 import kr.hhplus.be.server.api.user.domain.repository.UserRepository;
-import kr.hhplus.be.server.api.user.domain.service.UserService;
+import kr.hhplus.be.server.api.user.application.service.UserService;
 import kr.hhplus.be.server.common.exception.ErrorCode;
 import org.junit.Test;
 

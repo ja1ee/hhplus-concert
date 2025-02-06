@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 
-import kr.hhplus.be.server.api.concert.domain.service.ConcertService;
+import kr.hhplus.be.server.api.concert.application.service.ConcertService;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertScheduleResult;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertSeatResult;
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSchedule;

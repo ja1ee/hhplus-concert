@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.concert.domain.service;
+package kr.hhplus.be.server.api.concert.application.service;
 
 import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.common.exception.ErrorCode;

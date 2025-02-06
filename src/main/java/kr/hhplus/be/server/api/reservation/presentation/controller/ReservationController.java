@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.reservation.presentation;
+package kr.hhplus.be.server.api.reservation.presentation.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -6,10 +6,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import kr.hhplus.be.server.api.reservation.presentation.facade.ReservationFacade;
 import kr.hhplus.be.server.common.response.ApiResponse;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 import kr.hhplus.be.server.api.reservation.presentation.dto.ReservationRequest;
-import kr.hhplus.be.server.api.reservation.application.ReservationFacade;
 import kr.hhplus.be.server.api.reservation.presentation.dto.ReservationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

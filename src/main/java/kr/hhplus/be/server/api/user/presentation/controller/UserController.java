@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.user.presentation;
+package kr.hhplus.be.server.api.user.presentation.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -6,12 +6,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kr.hhplus.be.server.api.user.presentation.facade.PaymentFacade;
 import kr.hhplus.be.server.common.response.ApiResponse;
-import kr.hhplus.be.server.api.user.application.PaymentFacade;
 import kr.hhplus.be.server.api.user.application.dto.BalanceHistoryResult;
 import kr.hhplus.be.server.api.user.application.dto.UserResult;
 import kr.hhplus.be.server.api.user.presentation.dto.BalanceHistoryRequest;
-import kr.hhplus.be.server.api.user.domain.service.BalanceHistoryService;
+import kr.hhplus.be.server.api.user.application.service.BalanceHistoryService;
 import kr.hhplus.be.server.api.user.presentation.dto.BalanceHistoryResponse;
 import kr.hhplus.be.server.api.user.presentation.dto.UserResponse;
 import lombok.RequiredArgsConstructor;

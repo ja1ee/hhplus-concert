@@ -1,9 +1,9 @@
-package kr.hhplus.be.server.api.user.application;
+package kr.hhplus.be.server.api.user.presentation.facade;
 
 import kr.hhplus.be.server.api.user.application.dto.BalanceHistoryDto;
 import kr.hhplus.be.server.api.user.application.dto.UserResult;
-import kr.hhplus.be.server.api.user.domain.service.BalanceHistoryService;
-import kr.hhplus.be.server.api.user.domain.service.UserService;
+import kr.hhplus.be.server.api.user.application.service.BalanceHistoryService;
+import kr.hhplus.be.server.api.user.application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
