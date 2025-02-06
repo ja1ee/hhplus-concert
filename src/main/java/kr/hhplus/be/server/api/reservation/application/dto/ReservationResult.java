@@ -25,7 +25,7 @@ public record ReservationResult(
 			reservation.getSeatNo(),
 			reservation.getConcertDate(),
 			reservation.getFinalPrice(),
-			reservation.getIsReserved(),
+			reservation.isReserved(),
 			reservation.getExpiredAt()
 		);
 	}

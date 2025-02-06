@@ -9,14 +9,14 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 
-import kr.hhplus.be.server.api.concert.domain.service.ConcertService;
+import kr.hhplus.be.server.api.concert.application.service.ConcertService;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertScheduleResult;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertSeatResult;
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSchedule;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertScheduleRepository;
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSeat;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertSeatRepository;
-import kr.hhplus.be.server.api.common.exception.ErrorCode;
+import kr.hhplus.be.server.common.exception.ErrorCode;
 import org.junit.Test;
 
 //@ExtendWith(MockitoExtension.class)
