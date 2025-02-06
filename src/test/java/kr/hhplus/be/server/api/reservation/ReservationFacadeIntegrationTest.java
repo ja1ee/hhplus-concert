@@ -10,19 +10,17 @@ import java.util.List;
 
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSeat;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertSeatRepository;
-import kr.hhplus.be.server.api.reservation.application.ReservationFacade;
+import kr.hhplus.be.server.api.reservation.presentation.facade.ReservationFacade;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 import kr.hhplus.be.server.api.reservation.domain.repository.ReservationRepository;
-import kr.hhplus.be.server.api.token.domain.entity.Token;
-import kr.hhplus.be.server.api.token.domain.repository.TokenRepository;
 import kr.hhplus.be.server.api.user.application.dto.BalanceHistoryDto;
 import kr.hhplus.be.server.api.user.domain.entity.BalanceHistoryType;
 import kr.hhplus.be.server.api.user.domain.entity.User;
 import kr.hhplus.be.server.api.user.domain.repository.UserRepository;
 import kr.hhplus.be.server.common.exception.ErrorCode;
-import kr.hhplus.be.server.api.user.domain.service.UserService;
+import kr.hhplus.be.server.api.user.application.service.UserService;
 import kr.hhplus.be.server.util.DatabaseCleaner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,8 +42,6 @@ class ReservationFacadeIntegrationTest {
     private ConcertSeatRepository concertSeatRepository;
 	@Autowired
 	private ReservationRepository reservationRepository;
-    @Autowired
-    private TokenRepository tokenRepository;
 	@Autowired
 	private DatabaseCleaner databaseCleaner;
 
@@ -57,7 +53,6 @@ class ReservationFacadeIntegrationTest {
 		jdbcTemplate.execute("ALTER TABLE reservation MODIFY COLUMN expired_at DATETIME NULL"); // 테스트 컨테이너라서 별도 작성
 
 		userRepository.save(User.builder().balance(BigDecimal.valueOf(100_000)).build());
-		tokenRepository.save(Token.builder().userId(1L).isActivated(true).expiredAt(mockTime.plusMinutes(10)).build());
 		concertSeatRepository.save(ConcertSeat.builder().scheduleId(1L).seatNo(10).price(BigDecimal.valueOf(55_000)).isReserved(false).build());
 	}
 

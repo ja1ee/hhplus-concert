@@ -33,7 +33,7 @@ public class Reservation {
 
 	private BigDecimal finalPrice;
 
-	private Boolean isReserved = false;
+	private boolean isReserved;
 
 	@Column(nullable = false)
 	private LocalDateTime expiredAt;

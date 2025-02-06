@@ -10,9 +10,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
+import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 import kr.hhplus.be.server.api.reservation.domain.repository.ReservationRepository;
-import kr.hhplus.be.server.api.reservation.domain.service.ReservationService;
+import kr.hhplus.be.server.api.reservation.application.service.ReservationService;
 import kr.hhplus.be.server.common.exception.ErrorCode;
 import org.junit.Test;
 
@@ -35,12 +36,11 @@ public class ReservationServiceTest {
 		when(reservationRepository.save(any(Reservation.class))).thenReturn(mockReservation);
 
 		// when
-		Reservation sut = reservationService.makeReservation(dto);
+		ReservationResult sut = reservationService.makeReservation(dto);
 
 		// then
-		assertThat(sut.getSeatNo()).isEqualTo(mockReservation.getSeatNo());
-		assertThat(sut.getIsReserved()).isEqualTo(true);
-		assertThat(sut.getFinalPrice()).isEqualTo(mockReservation.getFinalPrice());
+		assertThat(sut.seatNo()).isEqualTo(mockReservation.getSeatNo());
+		assertThat(sut.finalPrice()).isEqualTo(mockReservation.getFinalPrice());
 	}
 
 	@Test
@@ -62,12 +62,12 @@ public class ReservationServiceTest {
 		when(reservationRepository.save(any(Reservation.class))).thenReturn(mockReservation);
 
 		// when
-		Reservation sut = reservationService.confirmReservation(id);
+		ReservationResult sut = reservationService.confirmReservation(id);
 
 		// then
-		assertThat(sut.getSeatNo()).isEqualTo(mockReservation.getSeatNo());
-		assertThat(sut.getIsReserved()).isEqualTo(true);
-		assertThat(sut.getExpiredAt()).isNull();
+		assertThat(sut.seatNo()).isEqualTo(mockReservation.getSeatNo());
+		assertThat(sut.isReserved()).isEqualTo(true);
+		assertThat(sut.expiredAt()).isNull();
 	}
 
 	@Test

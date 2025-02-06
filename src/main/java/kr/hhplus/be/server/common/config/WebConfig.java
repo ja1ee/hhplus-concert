@@ -1,6 +1,6 @@
 package kr.hhplus.be.server.common.config;
 
-import kr.hhplus.be.server.api.token.presentation.TokenHeaderInterceptor;
+import kr.hhplus.be.server.api.queue.presentation.interceptor.QueueHeaderInterceptor;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -12,11 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @AllArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-	private final TokenHeaderInterceptor tokenHeaderInterceptor;
+	private final QueueHeaderInterceptor queueHeaderInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(tokenHeaderInterceptor)
+		registry.addInterceptor(queueHeaderInterceptor)
 			.addPathPatterns("/reservation/**", "/concerts/**", "/users/**");
 		//.excludePathPatterns("/auth/**"); // 제외 경로
 	}
