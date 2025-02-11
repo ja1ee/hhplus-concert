@@ -1,6 +1,6 @@
 package kr.hhplus.be.server.api.queue;
 
-import kr.hhplus.be.server.api.queue.domain.repository.QueueRedisRepository;
+import kr.hhplus.be.server.api.queue.infrastructure.QueueRedisRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -110,7 +110,7 @@ class QueueRedisRepositoryTest {
     @Test
     void removeExpiredTokens() {
         // given
-        long expirationTime = System.currentTimeMillis() - 600000L;
+        long expirationTime = System.currentTimeMillis() - 60_000L;
 
         // when
         queueRepository.removeExpiredTokens(expirationTime);
@@ -120,13 +120,13 @@ class QueueRedisRepositoryTest {
     }
 
     @Test
-    void checkActivationAndRank() {
+    void checkQueueStatus() {
         // given
         String userId = "12345";
         when(redisTemplate.executePipelined(any(RedisCallback.class))).thenReturn(List.of(true, 2L));
 
         // when
-        List<Object> result = queueRepository.checkActivationAndRank(userId);
+        List<Object> result = queueRepository.checkQueueStatus(userId);
 
         // then
         assertNotNull(result);

@@ -3,9 +3,9 @@ package kr.hhplus.be.server.api.queue.presentation.interceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 import kr.hhplus.be.server.api.queue.application.service.QueueService;
+import kr.hhplus.be.server.api.queue.application.dto.TokenStatusResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,14 +24,14 @@ public class QueueHeaderInterceptor implements HandlerInterceptor {
 			return respondUnauthorized(response, "Unauthorized access");
 		}
 
-		List<Object> results = queueService.checkActivationAndRank(userId);
+		TokenStatusResult tokenStatus = queueService.checkQueueStatus(userId);
 
-		Boolean isActivated = (Boolean) results.get(0);
+		Boolean isActivated = tokenStatus.isActivated();
 		if (Boolean.TRUE.equals(isActivated)) {
 			return true;
 		}
 
-		Long rank = (Long) results.get(1);
+		Long rank = tokenStatus.rank();
 		if (rank != null) {
 			return respondWithRank(response, rank + 1);
 		}

@@ -1,9 +1,8 @@
 package kr.hhplus.be.server.api.queue.application.service;
 
+import kr.hhplus.be.server.api.queue.application.dto.TokenStatusResult;
 import kr.hhplus.be.server.api.queue.domain.repository.QueueRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class QueueService {
@@ -18,8 +17,8 @@ public class QueueService {
 		return queueRepository.addToWaitQueue(String.valueOf(userId));
 	}
 
-	public List<Object> checkActivationAndRank(String userId) {
-		return queueRepository.checkActivationAndRank(userId);
+	public TokenStatusResult checkQueueStatus(String userId) {
+		return TokenStatusResult.from(queueRepository.checkQueueStatus(userId));
 	}
 
 	public void removeFromRunQueue(long userId) {

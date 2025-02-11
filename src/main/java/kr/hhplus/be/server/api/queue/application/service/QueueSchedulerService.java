@@ -29,7 +29,7 @@ public class QueueSchedulerService {
 
 	@Scheduled(fixedRate = 10_000)
 	public void deleteExpiredTokens() {
-		double expirationTime = System.currentTimeMillis() - 600_000;
+		double expirationTime = System.currentTimeMillis() - 60_000;
 		queueRepository.removeExpiredTokens(expirationTime);
 	}
 }

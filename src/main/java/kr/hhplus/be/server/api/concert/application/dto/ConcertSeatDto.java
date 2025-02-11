@@ -12,21 +12,4 @@ public record ConcertSeatDto(
 	BigDecimal price,
 	Boolean isReserved
 ) {
-
-	public ConcertSeat convertToEntity() {
-		return ConcertSeat.builder().
-			id(id).scheduleId(scheduleId).seatNo(seatNo).price(price).isReserved(isReserved)
-			.build();
-	}
-
-	public static ConcertSeatDto convertFromEntity(ConcertSeat entity) {
-		return new ConcertSeatDto(
-			entity.getId(),
-			entity.getScheduleId(),
-			entity.getSeatNo(),
-			entity.getPrice(),
-			entity.getIsReserved()
-		);
-	}
-
 }

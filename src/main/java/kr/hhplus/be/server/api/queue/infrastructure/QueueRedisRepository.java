@@ -1,5 +1,6 @@
-package kr.hhplus.be.server.api.queue.domain.repository;
+package kr.hhplus.be.server.api.queue.infrastructure;
 
+import kr.hhplus.be.server.api.queue.domain.repository.QueueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -65,7 +66,7 @@ public class QueueRedisRepository implements QueueRepository {
     }
 
     @Override
-    public List<Object> checkActivationAndRank(String userId) {
+    public List<Object> checkQueueStatus(String userId) {
         return redisTemplate.executePipelined((RedisCallback<Object>) connection -> {
             connection.sIsMember(RUN_QUEUE_KEY.getBytes(), userId.getBytes());
             connection.zRank(WAIT_QUEUE_KEY.getBytes(), userId.getBytes());

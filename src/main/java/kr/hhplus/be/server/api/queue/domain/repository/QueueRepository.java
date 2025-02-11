@@ -24,5 +24,5 @@ public interface QueueRepository {
 
     Long getRank(String userId);
 
-    List<Object> checkActivationAndRank(String userId);
+    List<Object> checkQueueStatus(String userId);
 }

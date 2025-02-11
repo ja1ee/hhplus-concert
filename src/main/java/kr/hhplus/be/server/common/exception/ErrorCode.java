@@ -10,6 +10,7 @@ public enum ErrorCode {
     // Token
     EXPIRED_TOKEN(HttpStatus.BAD_REQUEST, "대기열 토큰이 만료되었습니다."),
     // Reservation
+    NOT_FOUND_RESERVATION(HttpStatus.NOT_FOUND, "존재하지 않는 예약입니다."),
     EXPIRED_SEAT(HttpStatus.BAD_REQUEST, "좌석 예약이 만료되었습니다."),
     // Concert
     NOT_FOUND_SCHEDULE(HttpStatus.NOT_FOUND, "존재하지 않는 콘서트입니다."),

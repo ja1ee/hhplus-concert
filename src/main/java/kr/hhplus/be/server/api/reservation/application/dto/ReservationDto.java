@@ -11,7 +11,7 @@ public record ReservationDto(
 	long id,
 	long userId,
 	long seatId,
-	long seatNo,
+	int seatNo,
 	LocalDate concertDate,
 	BigDecimal finalPrice
 ) {

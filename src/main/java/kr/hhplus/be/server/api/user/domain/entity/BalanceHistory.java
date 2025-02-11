@@ -19,9 +19,9 @@ public class BalanceHistory {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
-	private long userId;
+	private Long userId;
 
 	private BalanceHistoryType type;
 
