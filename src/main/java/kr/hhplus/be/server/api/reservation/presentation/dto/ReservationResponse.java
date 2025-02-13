@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 
 public record ReservationResponse(
-	long id,
-	long userId,
-	long seatId,
-	long seatNo,
+	Long id,
+	Long userId,
+	Long seatId,
+	int seatNo,
 	LocalDate concertDate,
 	BigDecimal finalPrice,
-	boolean isReserved,
+	Boolean isReserved,
 	LocalDateTime expiredAt
 ) {
 

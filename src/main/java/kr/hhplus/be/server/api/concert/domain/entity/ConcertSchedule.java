@@ -19,9 +19,9 @@ public class ConcertSchedule {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
-	private long concertId;
+	private Long concertId;
 
 	private LocalDate concertDate;
 

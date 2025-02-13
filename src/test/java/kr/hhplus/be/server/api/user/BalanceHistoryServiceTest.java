@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 
-import kr.hhplus.be.server.api.user.domain.service.BalanceHistoryService;
+import kr.hhplus.be.server.api.user.application.service.BalanceHistoryService;
 import kr.hhplus.be.server.api.user.application.dto.BalanceHistoryResult;
 import kr.hhplus.be.server.api.user.domain.entity.BalanceHistory;
 import kr.hhplus.be.server.api.user.application.dto.BalanceHistoryDto;

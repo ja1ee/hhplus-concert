@@ -15,12 +15,12 @@ public class ConcertSeat {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Version
 	private Long version;
 
-	private long scheduleId;
+	private Long scheduleId;
 
 	private int seatNo;
 

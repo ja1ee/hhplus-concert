@@ -1,9 +1,7 @@
 package kr.hhplus.be.server.api.reservation.domain.repository;
 
-import jakarta.persistence.LockModeType;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
