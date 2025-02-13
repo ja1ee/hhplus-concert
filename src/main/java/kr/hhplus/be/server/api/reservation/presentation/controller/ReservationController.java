@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import kr.hhplus.be.server.api.reservation.application.service.ReservationService;
 import kr.hhplus.be.server.api.reservation.presentation.facade.ReservationFacade;
 import kr.hhplus.be.server.common.response.ApiResponse;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservationController {
 
 	private final ReservationFacade reservationFacade;
+	private final ReservationService reservationService;
 
 	@Operation(
 		summary = "좌석 예약",
@@ -59,8 +61,7 @@ public class ReservationController {
 	@PostMapping("/payment")
 	public ResponseEntity<ApiResponse<ReservationResponse>> payForSeat(
 		@Valid @RequestBody ReservationRequest req) {
-		ReservationResult reservation = reservationFacade.payAmountAndConfirmReservation(
-			req.toDto());
+		ReservationResult reservation = reservationService.confirmReservation(req.id());
 		ReservationResponse response = ReservationResponse.from(reservation);
 		return ResponseEntity.ok(ApiResponse.of("좌석이 결제되었습니다.", response));
 	}

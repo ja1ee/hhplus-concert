@@ -10,6 +10,7 @@ import java.util.List;
 
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSeat;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertSeatRepository;
+import kr.hhplus.be.server.api.reservation.application.service.ReservationService;
 import kr.hhplus.be.server.api.reservation.presentation.facade.ReservationFacade;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
@@ -26,6 +27,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootTest
@@ -33,6 +35,8 @@ class ReservationFacadeIntegrationTest {
 
 	@Autowired
     private ReservationFacade reservationFacade;
+	@Autowired
+    private ReservationService reservationService;
     @Autowired
     private UserService userService;
 
@@ -94,7 +98,7 @@ class ReservationFacadeIntegrationTest {
 
 		// when
 		reservationFacade.makeReservation(dto);
-		ReservationResult sut = reservationFacade.payAmountAndConfirmReservation(dto);
+		ReservationResult sut = reservationService.confirmReservation(dto.id());
 		User user = userRepository.findById(1L).orElseThrow();
 
 		// then
@@ -112,6 +116,6 @@ class ReservationFacadeIntegrationTest {
 
 		// when & then
 		reservationFacade.makeReservation(dto);
-		assertThatThrownBy(() -> reservationFacade.payAmountAndConfirmReservation(dto)).hasMessage(ErrorCode.INSUFFICIENT_BALANCE.getReason());
+		assertThatThrownBy(() -> reservationService.confirmReservation(dto.id())).hasMessage(ErrorCode.INSUFFICIENT_BALANCE.getReason());
 	}
 }
