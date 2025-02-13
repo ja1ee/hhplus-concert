@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 
 public record ReservationResult(
-	Long id,
-	Long userId,
-	Long seatId,
+	long id,
+	long userId,
+	long seatId,
 	int seatNo,
 	LocalDate concertDate,
 	BigDecimal finalPrice,

@@ -20,10 +20,8 @@ public class QueueSchedulerService {
 	public void activateWaitingTokens() {
 		Set<String> tokens = queueRepository.getTokensFromFront(TOKEN_NUMBER_TO_ACTIVATE);
 
-		if (tokens != null && !tokens.isEmpty()) {
-			for (String token : tokens) {
-				queueRepository.activateToken(token);
-			}
+		if (!tokens.isEmpty()) {
+			queueRepository.activateTokens(tokens);
 		}
 	}
 

@@ -4,8 +4,10 @@ import kr.hhplus.be.server.api.queue.domain.repository.QueueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -37,13 +39,18 @@ public class QueueRedisRepository implements QueueRepository {
     }
 
     @Override
-    public void activateToken(String userId) {
+    public void activateTokens(Set<String> userIds) {
+        RedisSerializer keySerializer = redisTemplate.getKeySerializer();
+        RedisSerializer valueSerializer = redisTemplate.getValueSerializer();
         redisTemplate.executePipelined((RedisCallback<Object>) connection -> {
-            connection.zAdd(RUN_QUEUE_KEY.getBytes(), System.currentTimeMillis(), userId.getBytes());
-            connection.zRem(WAIT_QUEUE_KEY.getBytes(), userId.getBytes());
+            userIds.forEach(userId -> {
+                connection.zAdd(keySerializer.serialize(RUN_QUEUE_KEY), System.currentTimeMillis(), valueSerializer.serialize(userId));
+                connection.zRem(keySerializer.serialize(WAIT_QUEUE_KEY), valueSerializer.serialize(userId));
+            });
             return null;
         });
     }
+
 
     @Override
     public Set<String> getTokensFromFront(int numberToActivate) {
@@ -67,10 +74,13 @@ public class QueueRedisRepository implements QueueRepository {
 
     @Override
     public List<Object> checkQueueStatus(String userId) {
+        RedisSerializer keySerializer = redisTemplate.getKeySerializer();
+        RedisSerializer valueSerializer = redisTemplate.getValueSerializer();
         return redisTemplate.executePipelined((RedisCallback<Object>) connection -> {
-            connection.sIsMember(RUN_QUEUE_KEY.getBytes(), userId.getBytes());
-            connection.zRank(WAIT_QUEUE_KEY.getBytes(), userId.getBytes());
-            return null;
+            List<Object> results = new ArrayList<>();
+            results.add(connection.sIsMember(keySerializer.serialize(RUN_QUEUE_KEY), valueSerializer.serialize(userId)));
+            results.add(connection.zRank(keySerializer.serialize(WAIT_QUEUE_KEY), valueSerializer.serialize(userId.getBytes())));
+            return results;
         });
     }
 }

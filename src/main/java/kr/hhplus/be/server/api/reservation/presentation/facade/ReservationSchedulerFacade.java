@@ -3,12 +3,12 @@ package kr.hhplus.be.server.api.reservation.presentation.facade;
 import java.util.List;
 
 import kr.hhplus.be.server.api.concert.application.service.ConcertService;
-import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
+import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 import kr.hhplus.be.server.api.reservation.application.service.ReservationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +20,11 @@ public class ReservationSchedulerFacade {
 	@Scheduled(fixedRate = 10_000)  // 10초마다 실행
 	@Transactional
 	public void checkAndReleaseExpiredReservations() {
-		List<Reservation> expiredReservations = reservationService.getExpiredReservations();
+		List<ReservationResult> expiredReservations = reservationService.getExpiredReservations();
 
 		if (!expiredReservations.isEmpty()) {
 			expiredReservations.forEach(reservation -> {
-				concertService.expireSeat(reservation.getSeatId());
+				concertService.expireSeat(reservation.seatId());
 				reservationService.expireReservation(reservation);
 			});
 		}

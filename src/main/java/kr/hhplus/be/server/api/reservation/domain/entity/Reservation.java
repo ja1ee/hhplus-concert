@@ -25,6 +25,8 @@ public class Reservation {
 
 	private Long userId;
 
+	private Long concertId;
+
 	private Long seatId;
 
 	private int seatNo;

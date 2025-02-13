@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kr.hhplus.be.server.api.user.presentation.facade.PaymentFacade;
+import kr.hhplus.be.server.api.user.application.service.PaymentService;
 import kr.hhplus.be.server.common.response.ApiResponse;
 import kr.hhplus.be.server.api.user.application.dto.BalanceHistoryResult;
 import kr.hhplus.be.server.api.user.application.dto.UserResult;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-	private final PaymentFacade paymentFacade;
+	private final PaymentService paymentService;
 	private final BalanceHistoryService balanceHistoryService;
 
 	@Operation(
@@ -46,7 +46,7 @@ public class UserController {
 	@PostMapping("/charge")
 	public ResponseEntity<ApiResponse<BalanceHistoryResponse>> setAmount(
 		@RequestBody BalanceHistoryRequest req) {
-		paymentFacade.chargeAmount(req.toDto());
+		paymentService.chargeAmount(req.toDto());
 		BalanceHistoryResult balanceHistory = balanceHistoryService.addHistory(req.toDto());
 		BalanceHistoryResponse response = BalanceHistoryResponse.from(balanceHistory);
 		return ResponseEntity.ok(ApiResponse.of("잔액이 충전되었습니다.", response));
@@ -67,7 +67,7 @@ public class UserController {
 	public ResponseEntity<ApiResponse<UserResponse>> getBalance(
 		@Parameter(name = "userId", description = "조회할 사용자의 ID", example = "1")
 		@PathVariable("userId") long userId) {
-		UserResult user = paymentFacade.getUserById(userId);
+		UserResult user = paymentService.getUserById(userId);
 		UserResponse response = UserResponse.from(user);
 		return ResponseEntity.ok(ApiResponse.of("잔액이 조회되었습니다.", response));
 	}

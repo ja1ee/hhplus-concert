@@ -12,7 +12,7 @@ public interface QueueRepository {
 
     void addToRunQueue(String userId);
 
-    void activateToken(String userId);
+    void activateTokens(Set<String> userId);
 
     Set<String> getTokensFromFront(int tokenNumberToActivate);
 

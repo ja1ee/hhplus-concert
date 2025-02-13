@@ -37,7 +37,7 @@ public class ConcertService {
 
 	@Transactional(readOnly = true)
 	public ConcertSeatResult getAvailableSeats(long scheduleId) {
-		List<ConcertSeat> seats = concertSeatRepository.findAvailableSeatsByScheduleIdAndIsReservedFalse(scheduleId);
+		List<ConcertSeat> seats = concertSeatRepository.findByScheduleIdAndIsReservedFalse(scheduleId);
 
 		if (seats.isEmpty()) {
 			throw new CustomException(ErrorCode.NOT_FOUND_SEAT);
