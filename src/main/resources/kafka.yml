@@ -1,0 +1,28 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    properties:
+      auto.create.topics.enable: false
+      security.protocol: PLAINTEXT
+      request.timeout.ms: 20000
+      retry.backoff.ms: 500
+      auto:
+        offset.reset: earliest
+        register.schemas: false
+        create.topics.enable: false
+      use.latest.version: true
+      basic.auth.credentials.source: USER_INFO
+    producer:
+      client-id: ${spring.application.name}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      retries: 5
+    consumer:
+      group-id: ${spring.application.name}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        enable-auto-commit: false
+    listener:
+      ack-mode: manual
