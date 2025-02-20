@@ -1,7 +1,6 @@
 package kr.hhplus.be.server.dataplatform;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
+import kr.hhplus.be.server.api.reservation.application.event.ReservationConfirmedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -12,14 +11,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MockDataPlatformEventConsumer {
 
-    private final ObjectMapper objectMapper;
     private final MockDataPlatformSendService sendService;
 
     @KafkaListener(topics = "sending-reservation-request", groupId = "reservation-group")
-    public void sendReservationInfo(byte[] eventPayload) {
+    public void sendReservationInfo(ReservationConfirmedEvent event) {
         try {
-            ReservationResult result = objectMapper.readValue(eventPayload, ReservationResult.class);
-            sendService.sendReservationResult(result);
+            sendService.sendReservationResult(event.reservationResult());
         } catch (Exception e) {
             log.error("Error processing Kafka message", e);
         }
