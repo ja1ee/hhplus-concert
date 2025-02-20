@@ -2,16 +2,20 @@ package kr.hhplus.be.server.api.reservation.application.service;
 
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
+import kr.hhplus.be.server.api.reservation.application.event.ReservationConfirmedEvent;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 import kr.hhplus.be.server.api.reservation.domain.repository.ReservationRepository;
 import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.common.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -19,6 +23,7 @@ import java.util.List;
 public class ReservationService {
 
 	private final ReservationRepository reservationRepository;
+	private final ApplicationEventPublisher applicationEventPublisher;
 
 	public ReservationResult makeReservation(ReservationDto dto) {
 		Reservation reservation = Reservation.builder().
@@ -33,20 +38,28 @@ public class ReservationService {
         return ReservationResult.from(reservationRepository.save(reservation));
 	}
 
+	@Transactional
 	public ReservationResult confirmReservation(long id) {
 		Reservation reservation = reservationRepository.findById(id);
 		if (reservation.getExpiredAt().isBefore(LocalDateTime.now())) {
 			throw new CustomException(ErrorCode.EXPIRED_SEAT);
 		}
 		reservation.confirm();
-		return ReservationResult.from(reservationRepository.save(reservation));
+		ReservationResult result = ReservationResult.from(reservationRepository.save(reservation));
+		applicationEventPublisher.publishEvent(new ReservationConfirmedEvent(result));
+
+		return result;
 	}
 
-	public List<Reservation> getExpiredReservations() {
-		return reservationRepository.findByExpiredAtBeforeAndIsReservedTrue(LocalDateTime.now());
+	public List<ReservationResult> getExpiredReservations() {
+		List<Reservation> reservations = reservationRepository.findByExpiredAtBeforeAndIsReservedTrue(LocalDateTime.now());
+		return reservations.stream()
+				.map(ReservationResult::from)
+				.collect(Collectors.toList());
 	}
 
-	public void expireReservation(Reservation reservation) {
+	public void expireReservation(ReservationResult result) {
+		Reservation reservation = reservationRepository.findById(result.id());
 		reservation.expire();
 		reservationRepository.save(reservation);
 	}

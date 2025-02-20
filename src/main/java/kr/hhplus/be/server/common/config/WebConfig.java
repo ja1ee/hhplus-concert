@@ -14,10 +14,10 @@ public class WebConfig implements WebMvcConfigurer {
 
 	private final QueueHeaderInterceptor queueHeaderInterceptor;
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(queueHeaderInterceptor)
-			.addPathPatterns("/reservation/**", "/concerts/**", "/users/**");
-		//.excludePathPatterns("/auth/**"); // 제외 경로
-	}
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(queueHeaderInterceptor)
+//			.addPathPatterns("/reservation/**", "/concerts/**", "/users/**");
+//		//.excludePathPatterns("/auth/**"); // 제외 경로
+//	}
 }

@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.reservation;
+package kr.hhplus.be.server.api.reservation.integration;
 
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSeat;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertSeatRepository;

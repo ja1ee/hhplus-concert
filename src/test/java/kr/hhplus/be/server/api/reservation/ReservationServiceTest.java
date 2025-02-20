@@ -16,14 +16,16 @@ import kr.hhplus.be.server.api.reservation.domain.repository.ReservationReposito
 import kr.hhplus.be.server.api.reservation.application.service.ReservationService;
 import kr.hhplus.be.server.common.exception.ErrorCode;
 import org.junit.Test;
+import org.springframework.context.ApplicationEventPublisher;
 
 
 public class ReservationServiceTest {
 	private final ReservationRepository reservationRepository = mock(ReservationRepository.class);
-	private final ReservationService reservationService = new ReservationService(
-		reservationRepository);
-	LocalDateTime mockTime = LocalDateTime.of(2025, 1, 15, 10, 30);
+	private final ApplicationEventPublisher applicationEventPublisher = mock(ApplicationEventPublisher.class);
 
+	private final ReservationService reservationService = new ReservationService(
+		reservationRepository, applicationEventPublisher);
+	LocalDateTime mockTime = LocalDateTime.of(2025, 1, 15, 10, 30);
 
 	@Test
 	public void 임시_예약_성공() {

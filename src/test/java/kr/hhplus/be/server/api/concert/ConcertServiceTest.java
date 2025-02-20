@@ -68,7 +68,7 @@ public class ConcertServiceTest {
 		// given
 		long scheduleId = 1L;
 		List<ConcertSeat> mockSeats = Arrays.asList(createSeat(scheduleId, 10), createSeat(scheduleId, 11));
-		when(concertSeatRepository.findAvailableSeatsByScheduleIdAndIsReservedFalse(
+		when(concertSeatRepository.findByScheduleIdAndIsReservedFalse(
 			scheduleId)).thenReturn(mockSeats);
 
 		// when
@@ -84,10 +84,8 @@ public class ConcertServiceTest {
 	@Test
 	public void 예약가능좌석조회_예약가능좌석없으면_NOT_FOUND_SEAT() {
 		// given
-		ConcertSchedule schedule = ConcertSchedule.builder().concertId(1L).build();
-		when(concertSeatRepository.findAvailableSeatsByScheduleIdAndIsReservedFalse(
-			schedule.getId()))
-			.thenReturn(null);
+		when(concertSeatRepository.findByScheduleIdAndIsReservedFalse(1L))
+			.thenReturn(List.of());
 
 		// when
 		assertThatThrownBy(() -> concertService.getAvailableSeats(1L)).hasMessage(ErrorCode.NOT_FOUND_SEAT.getReason());

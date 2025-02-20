@@ -18,5 +18,5 @@ public interface ConcertSeatRepository extends JpaRepository<ConcertSeat, Long> 
 	@Query("SELECT c FROM ConcertSeat c WHERE c.id = :id")
 	Optional<ConcertSeat> findByIdWithLock(@Param("id") long id);
 
-	List<ConcertSeat> findAvailableSeatsByScheduleIdAndIsReservedFalse(long scheduleId);
+	List<ConcertSeat> findByScheduleIdAndIsReservedFalse(long scheduleId);
 }

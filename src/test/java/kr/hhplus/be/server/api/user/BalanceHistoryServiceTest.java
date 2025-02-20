@@ -32,7 +32,7 @@ public class BalanceHistoryServiceTest {
 				.amount(BigDecimal.valueOf(10000))
 				.build();
 
-		BalanceHistory mock = BalanceHistory.builder().userId(1L)
+		BalanceHistory mock = BalanceHistory.builder().id(1L).userId(1L)
 			.type(BalanceHistoryType.CHARGE).amount(BigDecimal.valueOf(10000)).build();
 
 		// save에 리턴되는 타입을 넣어줘야 함 -> 실제로 테스트할 때 만들어지는 빌더와 참조값이 다르므로
@@ -54,7 +54,7 @@ public class BalanceHistoryServiceTest {
 				.amount(BigDecimal.valueOf(10000))
 				.build();
 
-		BalanceHistory mock = BalanceHistory.builder().userId(1L)
+		BalanceHistory mock = BalanceHistory.builder().id(1L).userId(1L)
 				.type(BalanceHistoryType.PAY).amount(BigDecimal.valueOf(10000)).build();
 
 		when(balanceHistoryRepository.save(any(BalanceHistory.class))).thenReturn(mock);
