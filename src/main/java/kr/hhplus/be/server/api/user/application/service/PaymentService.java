@@ -3,7 +3,6 @@ package kr.hhplus.be.server.api.user.application.service;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 import kr.hhplus.be.server.api.user.application.dto.BalanceHistoryDto;
 import kr.hhplus.be.server.api.user.application.dto.UserResult;
-import kr.hhplus.be.server.api.user.application.event.PaymentProcessedEvent;
 import kr.hhplus.be.server.api.user.domain.entity.BalanceHistoryType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,7 +22,7 @@ public class PaymentService {
 		BalanceHistoryDto balanceHistoryDto = new BalanceHistoryDto(result.userId(), BalanceHistoryType.PAY, result.finalPrice());
 		userService.payAmount(balanceHistoryDto);
 		balanceHistoryService.addHistory(balanceHistoryDto);
-		applicationEventPublisher.publishEvent(new PaymentProcessedEvent(result));
+		//applicationEventPublisher.publishEvent(new PaymentProcessedEvent(result));
 	}
 
 	@Transactional

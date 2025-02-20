@@ -10,7 +10,6 @@ public record TokenStatusResult(
         Long rank
 ) {
     public static TokenStatusResult from(List<Object> results) {
-        System.out.println("results = " + results);
         return new TokenStatusResult(
                 (Boolean) results.get(0),
                 (Long) results.get(1)

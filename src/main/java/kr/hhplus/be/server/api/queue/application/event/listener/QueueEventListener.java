@@ -1,7 +1,7 @@
 package kr.hhplus.be.server.api.queue.application.event.listener;
 
 import kr.hhplus.be.server.api.queue.application.service.QueueService;
-import kr.hhplus.be.server.api.user.application.event.PaymentProcessedEvent;
+import kr.hhplus.be.server.api.reservation.application.event.ReservationConfirmedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,12 +16,11 @@ public class QueueEventListener {
     private final QueueService queueService;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void reservationConfirmedHandler(PaymentProcessedEvent event) {
+    public void reservationConfirmedHandler(ReservationConfirmedEvent event) {
         try {
             queueService.removeFromRunQueue(event.reservationResult());
         } catch (Exception e) {
             log.error("Deleting Token failed", e);
         }
     }
-
 }
