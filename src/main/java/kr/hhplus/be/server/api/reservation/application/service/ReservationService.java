@@ -4,6 +4,8 @@ import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 import kr.hhplus.be.server.api.reservation.application.event.ReservationConfirmedEvent;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
+import kr.hhplus.be.server.api.reservation.domain.entity.ReservationOutbox;
+import kr.hhplus.be.server.api.reservation.domain.repository.ReservationOutboxRepository;
 import kr.hhplus.be.server.api.reservation.domain.repository.ReservationRepository;
 import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.common.exception.ErrorCode;
@@ -17,12 +19,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static kr.hhplus.be.server.common.exception.ErrorCode.NOT_FOUND_RESERVATION;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
 
 	private final ReservationRepository reservationRepository;
+	private final ReservationOutboxRepository reservationOutboxRepository;
 	private final ApplicationEventPublisher applicationEventPublisher;
 
 	public ReservationResult makeReservation(ReservationDto dto) {
@@ -62,5 +67,22 @@ public class ReservationService {
 		Reservation reservation = reservationRepository.findById(result.id());
 		reservation.expire();
 		reservationRepository.save(reservation);
+	}
+
+	public void publishRecord(ReservationConfirmedEvent eventPayload) {
+
+
+		ReservationResult result = eventPayload.reservationResult();
+		long reservationId = result.id();
+
+		ReservationOutbox reservationOutbox = findOutboxById(reservationId);
+		reservationOutbox.published();
+
+		reservationOutboxRepository.save(reservationOutbox);
+	}
+
+	private ReservationOutbox findOutboxById(long reservationId) {
+		return reservationOutboxRepository.findById(reservationId)
+				.orElseThrow(() -> new CustomException(NOT_FOUND_RESERVATION));
 	}
 }

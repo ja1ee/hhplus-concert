@@ -1,9 +1,9 @@
 package kr.hhplus.be.server;
 
 import com.redis.testcontainers.RedisContainer;
-import jakarta.annotation.PreDestroy;
 import org.springframework.context.annotation.Configuration;
 import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.kafka.ConfluentKafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @Configuration
@@ -11,6 +11,10 @@ class TestcontainersConfig {
 
 	public static final MySQLContainer<?> MYSQL_CONTAINER;
 	public static final RedisContainer REDIS_CONTAINER;
+	public static final ConfluentKafkaContainer KAFKA_CONTAINER = new ConfluentKafkaContainer(
+			DockerImageName.parse("confluentinc/cp-kafka:latest")
+					.asCompatibleSubstituteFor("apache/kafka")
+	);
 
 	static {
 		MYSQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8.0"))
@@ -29,16 +33,9 @@ class TestcontainersConfig {
 		// Spring Redis 환경 속성 설정
 		System.setProperty("spring.data.redis.host", REDIS_CONTAINER.getHost());
 		System.setProperty("spring.data.redis.port", REDIS_CONTAINER.getMappedPort(6379).toString());
+
+		KAFKA_CONTAINER.start();
+		System.setProperty("spring.kafka.bootstrap-servers", KAFKA_CONTAINER.getBootstrapServers());
 	}
 
-	@PreDestroy
-	public void preDestroy() {
-		if (MYSQL_CONTAINER.isRunning()) {
-			MYSQL_CONTAINER.stop();
-		}
-
-		if (REDIS_CONTAINER.isRunning()) {
-			REDIS_CONTAINER.stop();
-		}
-	}
 }
