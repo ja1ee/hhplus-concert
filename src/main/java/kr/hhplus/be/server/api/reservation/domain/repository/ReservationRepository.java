@@ -1,5 +1,6 @@
 package kr.hhplus.be.server.api.reservation.domain.repository;
 
+import kr.hhplus.be.server.api.reservation.application.dto.ReservationStatus;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,8 +13,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
 	Reservation findById(long id);
 
-	Reservation findBySeatIdAndIsReservedTrue(long seatId); // 좌석 만료 확인용
+	Reservation findBySeatIdAndStatus(long seatId, ReservationStatus status); // 좌석 만료 확인용
 
-	List<Reservation> findByExpiredAtBeforeAndIsReservedTrue(LocalDateTime now); // 스케줄러용
+	List<Reservation> findByExpiredAtBeforeAndStatus(LocalDateTime expiredAt, ReservationStatus status); // 스케줄러용
 
 }

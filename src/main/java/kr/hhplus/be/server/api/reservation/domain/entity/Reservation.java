@@ -4,15 +4,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import kr.hhplus.be.server.api.reservation.application.dto.ReservationStatus;
 import lombok.*;
 
 @Entity
@@ -41,7 +39,8 @@ public class Reservation {
 
 	private BigDecimal finalPrice;
 
-	private Boolean isReserved = false;
+	@Enumerated(EnumType.STRING)
+	private ReservationStatus status;
 
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -49,10 +48,14 @@ public class Reservation {
 	private LocalDateTime expiredAt;
 
 	public void confirm() {
-		this.expiredAt = null;
+		this.status = ReservationStatus.reserved;
+	}
+
+	public void fail() {
+		this.status = ReservationStatus.failed;
 	}
 
 	public void expire() {
-		this.isReserved = false;
+		this.status = ReservationStatus.expired;
 	}
 }

@@ -2,7 +2,7 @@ package kr.hhplus.be.server.api.reservation.integration;
 
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSeat;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertSeatRepository;
-import kr.hhplus.be.server.api.reservation.presentation.facade.ReservationFacade;
+import kr.hhplus.be.server.api.reservation.application.service.ReservationService;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 import kr.hhplus.be.server.api.reservation.domain.repository.ReservationRepository;
@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class ReservationConcurrencyTest {
     @Autowired
-    private ReservationFacade reservationFacade;
+    private ReservationService reservationService;
     @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
@@ -37,13 +37,13 @@ public class ReservationConcurrencyTest {
     void 열명중_한명만_성공() throws InterruptedException {
         // given
         concertSeatRepository.save(ConcertSeat.builder().scheduleId(1L).seatNo(10).price(BigDecimal.valueOf(55_000)).isReserved(false).build());
-        ReservationDto dto = new ReservationDto(1L, 1L, 1L, 10, mockTime.toLocalDate(), BigDecimal.valueOf(55000));
+        ReservationDto dto = new ReservationDto(1L, 1L, 1L, 10, 1L, mockTime.toLocalDate(), BigDecimal.valueOf(55000));
 
         int tryCount = 10;
         List<Callable<Void>> tasks = new ArrayList<>();
         for (long i = 1; i <= tryCount; i++) {
             tasks.add(() -> {
-                reservationFacade.makeReservation(dto);
+                reservationService.makeReservation(dto);
                 return null;
             });
         }

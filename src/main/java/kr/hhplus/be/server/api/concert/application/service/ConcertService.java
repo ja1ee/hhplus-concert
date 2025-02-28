@@ -2,7 +2,6 @@ package kr.hhplus.be.server.api.concert.application.service;
 
 import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.common.exception.ErrorCode;
-import kr.hhplus.be.server.common.aop.lock.RedisLock;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertScheduleResult;
 import kr.hhplus.be.server.api.concert.application.dto.ConcertSeatResult;
 import kr.hhplus.be.server.api.concert.domain.entity.ConcertSchedule;
@@ -11,6 +10,7 @@ import kr.hhplus.be.server.api.concert.domain.repository.ConcertScheduleReposito
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertSeatRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +23,7 @@ public class ConcertService {
 
 	private final ConcertScheduleRepository concertScheduleRepository;
 	private final ConcertSeatRepository concertSeatRepository;
+	private final ApplicationEventPublisher applicationEventPublisher;
 
 	@Transactional(readOnly = true)
 	public ConcertScheduleResult getAvailableSchedules(long concertId) {
@@ -46,7 +47,22 @@ public class ConcertService {
 		return ConcertSeatResult.from(seats);
 	}
 
-	@RedisLock(prefix = "seat:", key = "#seatId")
+//	@RedisLock(prefix = "seat:", key = "#seatId")
+//	@Transactional
+//	public void reserveSeat(long reservationId, long seatId) {
+//		ConcertSeat seat = concertSeatRepository.findById(seatId)
+//				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_SEAT));
+//
+//		if (seat.getIsReserved()) {
+//			throw new CustomException(ErrorCode.ALREADY_RESERVED_SEAT);
+//		}
+//
+//		seat.reserve();
+//		concertSeatRepository.save(seat);
+//
+//		applicationEventPublisher.publishEvent(new ReserveSeatSucceedEvent(reservationId));
+//	}
+
 	public void reserveSeat(long seatId) {
 		ConcertSeat seat = concertSeatRepository.findById(seatId)
 				.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_SEAT));

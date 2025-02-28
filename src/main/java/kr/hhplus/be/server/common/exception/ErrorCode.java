@@ -22,7 +22,8 @@ public enum ErrorCode {
     INSUFFICIENT_CHARGE(HttpStatus.BAD_REQUEST, "잘못된 금액이 입력되었습니다."),
 
     INTERRUPT_OCCURRED(HttpStatus.BAD_REQUEST, "인터럽트가 발생했습니다"),
-    FAILED_GET_LOCK(HttpStatus.BAD_REQUEST, "락 획득에 실패하였습니다.");
+    FAILED_GET_LOCK(HttpStatus.BAD_REQUEST, "락 획득에 실패하였습니다."),
+    GENERAL_ERROR(HttpStatus.BAD_REQUEST, "예외가 발생했습니다.");
 
     private final HttpStatus httpStatus;
     // HttpStatus 를 필드로 가지면 서비스의 에러가 웹응답코드와 결합되지만 편리함을 위해 어느정도 허용됨.

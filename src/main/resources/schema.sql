@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS reservation (
                                            concert_id bigint not null,
                                            expired_at datetime(6),
                                            final_price decimal(38,2) not null,
-                                           is_reserved bit not null,
+                                           status varchar(255) not null,
                                            seat_id bigint not null,
                                            seat_no int not null,
                                            user_id bigint not null

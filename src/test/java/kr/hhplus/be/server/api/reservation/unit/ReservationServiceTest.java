@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.api.reservation;
+package kr.hhplus.be.server.api.reservation.unit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
+import kr.hhplus.be.server.api.reservation.application.dto.ReservationStatus;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
+import kr.hhplus.be.server.api.reservation.domain.repository.ReservationOutboxRepository;
 import kr.hhplus.be.server.api.reservation.domain.repository.ReservationRepository;
 import kr.hhplus.be.server.api.reservation.application.service.ReservationService;
 import kr.hhplus.be.server.common.exception.ErrorCode;
@@ -21,20 +23,20 @@ import org.springframework.context.ApplicationEventPublisher;
 
 public class ReservationServiceTest {
 	private final ReservationRepository reservationRepository = mock(ReservationRepository.class);
+	private final ReservationOutboxRepository reservationOutboxRepository = mock(ReservationOutboxRepository.class);
 	private final ApplicationEventPublisher applicationEventPublisher = mock(ApplicationEventPublisher.class);
 
 	private final ReservationService reservationService = new ReservationService(
-		reservationRepository, applicationEventPublisher);
+		reservationRepository, reservationOutboxRepository, applicationEventPublisher);
 	LocalDateTime mockTime = LocalDateTime.of(2025, 1, 15, 10, 30);
 
 	@Test
 	public void 임시_예약_성공() {
 		// given
-		ReservationDto dto = new ReservationDto(1L, 1L, 1L, 10, mockTime.toLocalDate(), BigDecimal.valueOf(50000));
+		ReservationDto dto = new ReservationDto(1L, 1L, 1L, 10, 1L, mockTime.toLocalDate(), BigDecimal.valueOf(50000));
 
 		Reservation mockReservation = dto.convertToEntity();
 
-		when(reservationRepository.findBySeatIdAndIsReservedTrue(dto.seatId())).thenReturn(null);
 		when(reservationRepository.save(any(Reservation.class))).thenReturn(mockReservation);
 
 		// when
@@ -54,9 +56,10 @@ public class ReservationServiceTest {
 				.userId(1L)
 				.seatId(2L)
 				.seatNo(20)
+				.concertId(1L)
 				.concertDate(mockTime.toLocalDate())
 				.finalPrice(BigDecimal.valueOf(50000))
-				.isReserved(true)
+				.status(ReservationStatus.reserved)
 				.expiredAt(LocalDateTime.now().plusMinutes(5))
 				.build();
 
@@ -68,8 +71,7 @@ public class ReservationServiceTest {
 
 		// then
 		assertThat(sut.seatNo()).isEqualTo(mockReservation.getSeatNo());
-		assertThat(sut.isReserved()).isEqualTo(true);
-		assertThat(sut.expiredAt()).isNull();
+		assertThat(sut.status()).isEqualTo(ReservationStatus.reserved);
 	}
 
 	@Test
@@ -80,9 +82,10 @@ public class ReservationServiceTest {
 				.userId(1L)
 				.seatId(3L)
 				.seatNo(30)
+				.concertId(1L)
 				.concertDate(mockTime.toLocalDate())
 				.finalPrice(BigDecimal.valueOf(50000))
-				.isReserved(true)
+				.status(ReservationStatus.reserved)
 				.expiredAt(mockTime)
 				.build();
 

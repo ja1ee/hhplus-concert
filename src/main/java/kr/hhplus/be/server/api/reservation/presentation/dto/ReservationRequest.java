@@ -13,19 +13,18 @@ public record ReservationRequest(
 	long id,
 
 	@Schema(description = "사용자 고유 ID", example = "12345")
-	@NotNull
 	long userId,
 
 	@Schema(description = "예약 신청한 좌석", example = "10")
-	@NotNull
 	ConcertSeatDto seatDto,
 
+	@Schema(description = "콘서트 ID", example = "1")
+	long concertId,
+
 	@Schema(description = "콘서트 날짜", example = "2025-01-01")
-	@NotNull
 	LocalDate concertDate,
 
 	@Schema(description = "예매 시점 가격", example = "50000")
-	@NotNull
 	BigDecimal finalPrice
 ) {
 
@@ -35,6 +34,7 @@ public record ReservationRequest(
 			userId,
 			seatDto.id(),
 			seatDto.seatNo(),
+			concertId,
 			concertDate,
 			finalPrice
 		);
