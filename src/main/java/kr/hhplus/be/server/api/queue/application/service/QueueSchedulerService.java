@@ -18,10 +18,10 @@ public class QueueSchedulerService {
 
 	@Scheduled(fixedRate = 10_000)
 	public void activateWaitingTokens() {
-		Set<String> tokens = queueRepository.getTokensFromFront(TOKEN_NUMBER_TO_ACTIVATE);
-
+		Set<String> tokens = queueRepository.pollTokens(TOKEN_NUMBER_TO_ACTIVATE);
 		if (!tokens.isEmpty()) {
-			queueRepository.activateTokens(tokens);
+			queueRepository.addTokensToRunQueue(tokens);
+			queueRepository.removeTokensFromWaitQueue(tokens);
 		}
 	}
 

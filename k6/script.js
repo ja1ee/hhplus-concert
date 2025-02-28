@@ -41,5 +41,4 @@ export default async () => {
     } else {
         failureCount.add(1);
     }
-
 }

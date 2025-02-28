@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import kr.hhplus.be.server.api.queue.application.service.QueueService;
-import kr.hhplus.be.server.api.queue.application.dto.TokenStatusResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,14 +23,13 @@ public class QueueHeaderInterceptor implements HandlerInterceptor {
 			return respondUnauthorized(response, "Unauthorized access");
 		}
 
-		TokenStatusResult tokenStatus = queueService.checkQueueStatus(userId);
+		Boolean isActivated = queueService.isActivated(userId);
 
-		Boolean isActivated = tokenStatus.isActivated();
 		if (Boolean.TRUE.equals(isActivated)) {
 			return true;
 		}
 
-		Long rank = tokenStatus.rank();
+		Long rank = queueService.getRank(userId);
 		if (rank != null) {
 			return respondWithRank(response, rank + 1);
 		}
@@ -41,7 +39,9 @@ public class QueueHeaderInterceptor implements HandlerInterceptor {
 
 	private boolean respondWithRank(HttpServletResponse response, Long rank) throws IOException {
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.getWriter().write("User's rank: " + rank);
+		response.setContentType("application/json");
+		String jsonResponse = "{\"rank\": " + rank + "}";
+		response.getWriter().write(jsonResponse);
 		return false;
 	}
 

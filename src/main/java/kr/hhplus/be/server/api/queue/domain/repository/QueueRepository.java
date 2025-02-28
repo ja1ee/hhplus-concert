@@ -2,27 +2,24 @@ package kr.hhplus.be.server.api.queue.domain.repository;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Set;
 
 @Repository
 public interface QueueRepository {
 
-    Long addToWaitQueue(String userId);
+    void addToWaitQueue(String userId);
 
-    void addToRunQueue(String userId);
+    void addTokensToRunQueue(Set<String> userId);
 
-    void activateTokens(Set<String> userId);
+    void removeTokensFromWaitQueue(Set<String> userIds);
 
-    Set<String> getTokensFromFront(int tokenNumberToActivate);
+    Set<String> pollTokens(int tokenNumberToActivate);
 
     void removeFromRunQueue(String userId);
-
-    void removeFromWaitQueue(String userId);
 
     void removeExpiredTokens(double expirationTime);
 
     Long getRank(String userId);
 
-    List<Object> checkQueueStatus(String userId);
+    Boolean getQueueStatus(String userId);
 }
