@@ -1,7 +1,10 @@
 package kr.hhplus.be.server.api.reservation.application.service;
 
+import kr.hhplus.be.server.api.concert.application.event.ReserveSeatFailedEvent;
+import kr.hhplus.be.server.api.concert.application.event.ReserveSeatSucceedEvent;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
+import kr.hhplus.be.server.api.reservation.application.dto.ReservationStatus;
 import kr.hhplus.be.server.api.reservation.application.event.ReservationConfirmedEvent;
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
 import kr.hhplus.be.server.api.reservation.domain.entity.ReservationOutbox;
@@ -35,9 +38,10 @@ public class ReservationService {
 				userId(dto.userId()).
 				seatId(dto.seatId()).
 				seatNo(dto.seatNo()).
+				concertId(dto.concertId()).
 				concertDate(dto.concertDate()).
 				finalPrice(dto.finalPrice()).
-				isReserved(true).
+				status(ReservationStatus.pending).
 				expiredAt(LocalDateTime.now().plusMinutes(5)).
 				build();
         return ReservationResult.from(reservationRepository.save(reservation));
@@ -49,6 +53,11 @@ public class ReservationService {
 		if (reservation.getExpiredAt().isBefore(LocalDateTime.now())) {
 			throw new CustomException(ErrorCode.EXPIRED_SEAT);
 		}
+
+		if (reservation.getStatus() == ReservationStatus.reserved) {
+			throw new CustomException(ErrorCode.ALREADY_RESERVED_SEAT);
+		}
+
 		reservation.confirm();
 		ReservationResult result = ReservationResult.from(reservationRepository.save(reservation));
 		applicationEventPublisher.publishEvent(new ReservationConfirmedEvent(result));
@@ -57,7 +66,7 @@ public class ReservationService {
 	}
 
 	public List<ReservationResult> getExpiredReservations() {
-		List<Reservation> reservations = reservationRepository.findByExpiredAtBeforeAndIsReservedTrue(LocalDateTime.now());
+		List<Reservation> reservations = reservationRepository.findByExpiredAtBeforeAndStatus(LocalDateTime.now(), ReservationStatus.reserved);
 		return reservations.stream()
 				.map(ReservationResult::from)
 				.collect(Collectors.toList());
@@ -69,9 +78,21 @@ public class ReservationService {
 		reservationRepository.save(reservation);
 	}
 
+	@Transactional
+	public void successReservation(ReserveSeatSucceedEvent event) {
+		Reservation reservation = reservationRepository.findById(event.reservationId());
+		reservation.confirm();
+		reservationRepository.save(reservation);
+	}
+
+	@Transactional
+	public void failReservation(ReserveSeatFailedEvent event) {
+		Reservation reservation = reservationRepository.findById(event.reservationId());
+		reservation.fail();
+		reservationRepository.save(reservation);
+	}
+
 	public void publishRecord(ReservationConfirmedEvent eventPayload) {
-
-
 		ReservationResult result = eventPayload.reservationResult();
 		long reservationId = result.id();
 

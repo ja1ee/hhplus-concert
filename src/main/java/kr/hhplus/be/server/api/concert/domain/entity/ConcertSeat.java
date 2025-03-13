@@ -28,9 +28,7 @@ public class ConcertSeat {
 
 	private Boolean isReserved = false;
 
-	public void reserve() {
-		this.isReserved = true;
-	}
+	public void reserve() { this.isReserved = true; }
 
 	public void expire() { this.isReserved = false; }
 }

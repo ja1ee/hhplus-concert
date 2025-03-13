@@ -18,19 +18,20 @@ import kr.hhplus.be.server.api.concert.domain.entity.ConcertSeat;
 import kr.hhplus.be.server.api.concert.domain.repository.ConcertSeatRepository;
 import kr.hhplus.be.server.common.exception.ErrorCode;
 import org.junit.Test;
+import org.springframework.context.ApplicationEventPublisher;
 
-//@ExtendWith(MockitoExtension.class)
 public class ConcertServiceTest {
 
 	private final ConcertScheduleRepository concertScheduleRepository = mock(
 		ConcertScheduleRepository.class);
 	private final ConcertSeatRepository concertSeatRepository = mock(
 		ConcertSeatRepository.class);
+	private final ApplicationEventPublisher applicationEventPublisher = mock(ApplicationEventPublisher.class);
 	private final ConcertService concertService = new ConcertService(concertScheduleRepository,
-		concertSeatRepository);
+		concertSeatRepository, applicationEventPublisher);
 
 	@Test
-	public void 예약가능날짜조회() throws ParseException {
+	public void 예약가능날짜조회() {
 		// given
 		long concertId = 1L;
 		List<ConcertSchedule> mockSchedules = Arrays.asList(

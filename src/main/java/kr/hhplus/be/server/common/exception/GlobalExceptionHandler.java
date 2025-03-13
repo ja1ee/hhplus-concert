@@ -32,4 +32,9 @@ public class GlobalExceptionHandler {
 			ex.getMessage());
 		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
+	@ExceptionHandler(CustomException.class)
+	public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
+		return new ResponseEntity<>(new ErrorResponse(200, ex.getMessage()), HttpStatus.OK);
+	}
 }

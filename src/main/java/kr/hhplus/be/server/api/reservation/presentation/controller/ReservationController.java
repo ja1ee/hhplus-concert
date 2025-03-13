@@ -14,10 +14,7 @@ import kr.hhplus.be.server.api.reservation.presentation.dto.ReservationRequest;
 import kr.hhplus.be.server.api.reservation.presentation.dto.ReservationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/reservation")
 public class ReservationController {
 
-	private final ReservationFacade reservationFacade;
 	private final ReservationService reservationService;
+	private final ReservationFacade reservationFacade;
 
 	@Operation(
 		summary = "좌석 예약",

@@ -5,15 +5,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import kr.hhplus.be.server.api.reservation.domain.entity.Reservation;
+import lombok.Builder;
 
+@Builder
 public record ReservationResult(
 	long id,
 	long userId,
 	long seatId,
 	int seatNo,
+	long concertId,
 	LocalDate concertDate,
 	BigDecimal finalPrice,
-	Boolean isReserved,
+	ReservationStatus status,
 	LocalDateTime expiredAt
 ) {
 
@@ -23,9 +26,10 @@ public record ReservationResult(
 			reservation.getUserId(),
 			reservation.getSeatId(),
 			reservation.getSeatNo(),
+			reservation.getConcertId(),
 			reservation.getConcertDate(),
 			reservation.getFinalPrice(),
-			reservation.getIsReserved(),
+			reservation.getStatus(),
 			reservation.getExpiredAt()
 		);
 	}

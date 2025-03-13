@@ -32,10 +32,10 @@ public class QueueController {
 		)
 	})
 	@GetMapping("/{userId}")
-	public ResponseEntity<ApiResponse<Long>> createToken(
+	public ResponseEntity<ApiResponse<Long>> signToken(
 		@Parameter(name = "userId", description = "유저의 고유 ID", example = "12345")
 		@PathVariable("userId") long userId) {
-		Long rank = queueService.addToWaitQueue(userId);
-		return ResponseEntity.ok(ApiResponse.of("대기열에 등록되었습니다.", rank));
+		queueService.addToWaitQueue(userId);
+		return ResponseEntity.ok(ApiResponse.of("대기열에 등록되었습니다.", userId));
 	}
 }

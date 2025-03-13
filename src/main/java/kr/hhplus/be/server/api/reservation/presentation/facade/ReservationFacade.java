@@ -6,6 +6,7 @@ import kr.hhplus.be.server.api.reservation.application.dto.ReservationDto;
 import kr.hhplus.be.server.api.reservation.application.dto.ReservationResult;
 import kr.hhplus.be.server.api.reservation.application.service.ReservationService;
 import kr.hhplus.be.server.api.user.application.service.PaymentService;
+import kr.hhplus.be.server.common.aop.lock.RedisLock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ public class ReservationFacade {
 	private final ConcertService concertService;
 	private final QueueService queueService;
 
+	@RedisLock(prefix = "seat:", key = "#seatId")
 	@Transactional
 	public ReservationResult makeReservation(ReservationDto dto) {
 		// 좌석 임시 예약
